@@ -1,0 +1,2 @@
+# futevolei-radar
+Sistema pessoal pra cadastrar torneios oficiais de futevôlei e receber avisos automáticos sobre próximos eventos. Node.js, TypeScript, Express, Prisma e PostgreSQL." Com um toque de humor/contexto:  "Tipo um OneFutebol, mas pra futevôlei — porque essa API não existe. Painel pra cadastrar torneios + avisos automáticos via Telegram. TS + Express + Prisma + Postgres." Mais enxuta (cabe até em telas pequenas):  "Cadastro e avisos automáticos de torneios de futevôlei (TS, Express, Prisma, Postgres).
