@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum StatusEvento {
+  AGENDADO
+  EM_ANDAMENTO
+  FINALIZADO
+  CANCELADO
+}
+
+model Evento {
+  id           String       @id @default(cuid())
+  torneio      String
+  etapa        String?
+  categoria    String?
+  dataInicio   DateTime
+  dataFim      DateTime?
+  local        String?
+  cidade       String?
+  estado       String?
+  status       StatusEvento @default(AGENDADO)
+  resultado    String?
+  fonteUrl     String?
+  observacoes  String?
+  criadoEm     DateTime     @default(now())
+  atualizadoEm DateTime     @updatedAt
+}
