@@ -8,23 +8,29 @@ Diferente do futebol, o futevôlei não tem APIs públicas de calendário/result
 
 ## Status atual
 
-🚧 **Fase de planejamento** — este repositório por enquanto contém só documentação. Nenhum código ainda.
+✅ **Fase 1 concluída** — backend rodando, conectado ao Postgres (Neon) via Prisma, com cadastro/edição validados.
+
+🚧 **Fase 2 em andamento** — API REST de eventos:
+- `GET /eventos` — lista todos os eventos
+- `POST /eventos` — cria um novo evento
+
+Próximo: rotas de editar/deletar evento, depois painel admin em React.
 
 Veja o [Roadmap completo](docs/ROADMAP.md) e o [Modelo de Dados](docs/DATA-MODEL.md).
 
 ## Stack escolhida
 
-| Camada          | Tecnologia                     | Por quê                                          |
-| --------------- | ------------------------------ | ------------------------------------------------ |
-| Linguagem       | TypeScript                     | já é o que o dev usa no dia a dia                |
-| Backend         | Node.js + Express              | simples, leve, conhecido                         |
-| ORM             | Prisma                         | já é o que o dev usa                             |
-| Banco de dados  | PostgreSQL (Neon)              | free tier sem instalar nada local, scale-to-zero |
-| Admin (Fase 1)  | Prisma Studio                  | painel CRUD instantâneo, zero UI pra escrever    |
-| Admin (Fase 2)  | React                          | UI customizada quando fizer sentido              |
-| Avisos (Fase 3) | Telegram Bot API + `node-cron` | grátis, simples, sem precisar de app             |
+| Camada | Tecnologia | Por quê |
+|---|---|---|
+| Linguagem | TypeScript | já é o que o dev usa no dia a dia |
+| Backend | Node.js + Express | simples, leve, conhecido |
+| ORM | Prisma | já é o que o dev usa |
+| Banco de dados | PostgreSQL (Neon) | free tier sem instalar nada local, scale-to-zero |
+| Admin (Fase 1) | Prisma Studio | painel CRUD instantâneo, zero UI pra escrever |
+| Admin (Fase 2) | React | UI customizada quando fizer sentido |
+| Avisos (Fase 3) | Telegram Bot API + `node-cron` | grátis, simples, sem precisar de app |
 
-## Estrutura planejada do projeto
+## Estrutura do projeto
 
 Monorepo: backend e frontend convivem no mesmo repositório, em pastas separadas.
 
@@ -32,12 +38,15 @@ Monorepo: backend e frontend convivem no mesmo repositório, em pastas separadas
 .
 ├── backend/
 │   ├── prisma/
-│   │   └── schema.prisma     # modelo de dados (ver docs/DATA-MODEL.md)
+│   │   ├── migrations/
+│   │   └── schema.prisma      # modelo de dados (ver docs/DATA-MODEL.md)
+│   ├── generated/prisma/       # client do Prisma gerado
 │   ├── src/
-│   │   ├── server.ts         # entrypoint do Express
-│   │   ├── routes/           # rotas da API (CRUD de eventos)
-│   │   ├── jobs/              # jobs agendados (fase 3 — avisos)
-│   │   └── services/          # integração com Telegram, etc.
+│   │   ├── app.ts              # configuração do Express (rotas, middlewares)
+│   │   ├── server.ts           # entrypoint — sobe o servidor
+│   │   ├── prisma.ts           # instância singleton do Prisma Client
+│   │   ├── repositories/       # acesso ao banco (ex: eventoRepository.ts)
+│   │   └── routes/             # rotas da API (ex: eventos.ts)
 │   ├── .env
 │   ├── package.json
 │   └── tsconfig.json
@@ -49,13 +58,11 @@ Monorepo: backend e frontend convivem no mesmo repositório, em pastas separadas
 └── README.md
 ```
 
-## Como rodar (placeholder)
-
-> Será preenchido quando o código base existir (Fase 1 do roadmap).
+## Como rodar
 
 ```bash
 # clonar o repo
-git clone <url-do-repo>
+git clone https://github.com/Lucas0M/futevolei-radar.git
 cd futevolei-radar/backend
 
 # instalar dependências
@@ -68,12 +75,14 @@ cp .env.example .env
 # rodar migrations
 npx prisma migrate dev
 
-# abrir o painel administrativo (Prisma Studio)
+# (opcional) abrir o painel administrativo do banco
 npx prisma studio
 
-# rodar a API
+# rodar a API em modo dev
 npm run dev
 ```
+
+A API sobe em `http://localhost:3000`.
 
 ## Próximos passos
 
