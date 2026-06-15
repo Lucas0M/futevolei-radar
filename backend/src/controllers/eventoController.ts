@@ -7,13 +7,27 @@ export const findAllEvents = async (req: Request, res: Response) => {
   res.json(eventos);
 };
 
+export const findEventById = async (req: Request, res: Response) => {
+  const id: string = String(req.params.id);
+
+  try {
+    const evento = await eventoRepository.findEventById(id);
+    if (!evento) return res.status(404).json({ error: "Event not founded!" });
+    res.json(evento);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Cannot find the event", details: error });
+  }
+};
+
 export const createEvent = async (req: Request, res: Response) => {
   const { torneio, dataInicio } = req.body;
 
   if (!torneio || !dataInicio) {
     return res
       .status(400)
-      .json({ error: "Torneio e data de início são obrigatórios" });
+      .json({ error: "Torneio name and data must be required!" });
   }
 
   try {
@@ -22,17 +36,13 @@ export const createEvent = async (req: Request, res: Response) => {
   } catch (error) {
     return res
       .status(500)
-      .json({ error: "Erro ao criar evento", details: error });
+      .json({ error: "Error to create event!", details: error });
   }
 };
 
 export const updateEvent = async (req: Request, res: Response) => {
   const id: string = String(req.params.id);
   const data: Prisma.EventoUpdateInput = req.body;
-
-  if (!data) {
-    return res.status(400).json({ error: "Not enough data to update!" });
-  }
 
   try {
     const updated = await eventoRepository.updateEvent(id, data);
@@ -47,9 +57,12 @@ export const updateEvent = async (req: Request, res: Response) => {
 export const deleteEvent = async (req: Request, res: Response) => {
   const id: string = String(req.params.id);
 
-  await eventoRepository.deleteEvent(id);
-
-  res.status(202).send();
+  try {
+    await eventoRepository.deleteEvent(id);
+    res.status(202).send();
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Error trying delete a event!", details: error });
+  }
 };
-
-export default { findAllEvents, createEvent, updateEvent, deleteEvent };

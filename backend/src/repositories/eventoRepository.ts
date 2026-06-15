@@ -8,6 +8,10 @@ export const eventoRepository = {
     });
   },
 
+  findEventById: async (id: string) => {
+    return prisma.evento.findUnique({ where: { id } });
+  },
+
   createEvent: async (data: Prisma.EventoCreateInput) => {
     return prisma.evento.create({ data });
   },

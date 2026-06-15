@@ -4,11 +4,13 @@ import {
   createEvent,
   updateEvent,
   deleteEvent,
+  findEventById,
 } from "../controllers/eventoController";
 
 const router = Router();
 
 router.get("/", findAllEvents);
+router.get("/:id", findEventById);
 router.post("/", createEvent);
 router.put("/:id", updateEvent);
 router.delete("/:id", deleteEvent);
