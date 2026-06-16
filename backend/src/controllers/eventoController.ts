@@ -3,8 +3,12 @@ import { eventoRepository } from "../repositories/eventoRepository";
 import type { Prisma } from "../../generated/prisma/client";
 
 export const findAllEvents = async (req: Request, res: Response) => {
-  const eventos = await eventoRepository.findAllEvents();
-  res.json(eventos);
+  try {
+    const eventos = await eventoRepository.findAllEvents();
+    res.json(eventos);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal error", details: error });
+  }
 };
 
 export const findEventById = async (req: Request, res: Response) => {
@@ -12,7 +16,7 @@ export const findEventById = async (req: Request, res: Response) => {
 
   try {
     const evento = await eventoRepository.findEventById(id);
-    if (!evento) return res.status(404).json({ error: "Event not founded!" });
+    if (!evento) return res.status(404).json({ error: "Event not found!" });
     res.json(evento);
   } catch (error) {
     return res
@@ -27,7 +31,7 @@ export const createEvent = async (req: Request, res: Response) => {
   if (!torneio || !dataInicio) {
     return res
       .status(400)
-      .json({ error: "Torneio name and data must be required!" });
+      .json({ error: "Tournment name and date must be exists!" });
   }
 
   try {
@@ -59,7 +63,7 @@ export const deleteEvent = async (req: Request, res: Response) => {
 
   try {
     await eventoRepository.deleteEvent(id);
-    res.status(202).send();
+    res.status(204).send();
   } catch (error) {
     return res
       .status(500)
