@@ -7,12 +7,14 @@ Diferente do futebol, o futevôlei não tem APIs públicas de calendário/result
 ## Status atual
 ✅ **Fase 1 concluída** — backend rodando, conectado ao Postgres (Neon) via Prisma, com cadastro/edição validados.
 
-✅ **Fase 2 concluída** — CRUD completo de eventos com error handling centralizado:
+✅ **Fase 2 concluída** — CRUD completo de eventos com error handling e validação de input:
 - `GET /eventos` — lista todos os eventos
 - `GET /eventos/:id` — busca evento por ID
 - `POST /eventos` — cria um novo evento
 - `PATCH /eventos/:id` — atualiza parcialmente um evento
 - `DELETE /eventos/:id` — remove um evento
+- Validação de body com Zod (400 em input inválido)
+- Global error handler centralizado (AppError, Prisma P2025, 500 genérico)
 
 🚧 **Fase 3 em andamento** — painel admin em React.
 
@@ -25,6 +27,7 @@ Veja o [Roadmap completo](docs/ROADMAP.md) e o [Modelo de Dados](docs/DATA-MODEL
 | Backend | Node.js + Express | simples, leve, conhecido |
 | ORM | Prisma | já é o que o dev usa |
 | Banco de dados | PostgreSQL (Neon) | free tier sem instalar nada local, scale-to-zero |
+| Validação | Zod | padrão do mercado TS, type-safe, integra com Prisma |
 | Admin (Fase 1) | Prisma Studio | painel CRUD instantâneo, zero UI pra escrever |
 | Admin (Fase 3) | React | UI customizada quando fizer sentido |
 | Avisos (Fase 4) | Telegram Bot API + `node-cron` | grátis, simples, sem precisar de app |
@@ -46,8 +49,9 @@ Monorepo: backend e frontend convivem no mesmo repositório, em pastas separadas
 │   │   ├── controllers/           # lógica de cada rota (ex: eventoController.ts)
 │   │   ├── repositories/          # acesso ao banco (ex: eventoRepository.ts)
 │   │   ├── routes/                # rotas da API (ex: eventos.ts)
-│   │   ├── middlewares/           # middlewares globais (ex: errorHandler.ts)
-│   │   └── error/                 # classes de erro customizadas (ex: AppError.ts)
+│   │   ├── schemas/               # schemas de validação Zod (ex: eventoSchema.ts)
+│   │   ├── middlewares/           # middlewares globais (validate.ts, errorHandler.ts)
+│   │   └── error/                 # classes de erro customizadas (AppError.ts)
 │   ├── .env
 │   ├── package.json
 │   └── tsconfig.json
@@ -101,5 +105,6 @@ A API sobe em `http://localhost:3000`.
 3. ~~Conectar no banco Neon e rodar a primeira migration~~
 4. ~~Validar o cadastro via Prisma Studio~~
 5. ~~CRUD completo de eventos com error handling centralizado~~
-6. Painel admin em React (`frontend/`)
-7. Bot do Telegram com `node-cron` para avisos automáticos
+6. ~~Validação de input com Zod~~
+7. Painel admin em React (`frontend/`)
+8. Bot do Telegram com `node-cron` para avisos automáticos
