@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const createEventoSchema = z.object({
-  torneio: z.string().min(3),
+  torneio: z.string().min(3, "Tournament name must be at least 3 characters"),
   etapa: z.string().optional(),
   categoria: z.string().optional(),
   dataInicio: z.coerce.date(),

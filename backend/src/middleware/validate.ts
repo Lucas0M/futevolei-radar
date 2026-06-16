@@ -9,8 +9,7 @@ export const validate = (schema: ZodObject) => {
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
-      const err = result as any;
-      return next(new AppError(err.error.issues[0].message, 400));
+      return next(new AppError(result.error.issues[0].message, 400));
     }
 
     req.body = result.data
