@@ -1,72 +1,80 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { eventoRepository } from "../repositories/eventoRepository";
 import type { Prisma } from "../../generated/prisma/client";
+import { AppError } from "../error/AppError";
 
-export const findAllEvents = async (req: Request, res: Response) => {
+export const findAllEvents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const eventos = await eventoRepository.findAllEvents();
     res.json(eventos);
   } catch (error) {
-    return res.status(500).json({ error: "Internal error", details: error });
+    next(error);
   }
 };
 
-export const findEventById = async (req: Request, res: Response) => {
-  const id: string = String(req.params.id);
-
+export const findEventById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const evento = await eventoRepository.findEventById(id);
-    if (!evento) return res.status(404).json({ error: "Event not found!" });
+    const evento = await eventoRepository.findEventById(String(req.params.id));
+    if (!evento) throw new AppError("Event not found", 404);
+
     res.json(evento);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Cannot find the event", details: error });
+    next(error);
   }
 };
 
-export const createEvent = async (req: Request, res: Response) => {
+export const createEvent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { torneio, dataInicio } = req.body;
 
   if (!torneio || !dataInicio) {
-    return res
-      .status(400)
-      .json({ error: "Tournment name and date must be exists!" });
+    throw new AppError("Tournment name and date must be exists!");
   }
 
   try {
     const evento = await eventoRepository.createEvent({ torneio, dataInicio });
     res.status(201).json(evento);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Error to create event!", details: error });
+    next(error);
   }
 };
 
-export const updateEvent = async (req: Request, res: Response) => {
-  const id: string = String(req.params.id);
-  const data: Prisma.EventoUpdateInput = req.body;
-
+export const updateEvent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const updated = await eventoRepository.updateEvent(id, data);
+    const updated = await eventoRepository.updateEvent(
+      String(req.params.id),
+      req.body,
+    );
     res.json(updated);
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Error trying update event!", details: error });
+    next(error);
   }
 };
 
-export const deleteEvent = async (req: Request, res: Response) => {
-  const id: string = String(req.params.id);
-
+export const deleteEvent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    await eventoRepository.deleteEvent(id);
+    await eventoRepository.deleteEvent(String(req.params.id));
     res.status(204).send();
   } catch (error) {
-    return res
-      .status(500)
-      .json({ error: "Error trying delete a event!", details: error });
+    next(error);
   }
 };
