@@ -36,13 +36,12 @@ export const createEvent = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const { torneio, dataInicio } = req.body;
-
-  if (!torneio || !dataInicio) {
-    throw new AppError("Tournment name and date must be exists!");
-  }
-
   try {
+    const { torneio, dataInicio } = req.body;
+    if (!torneio || !dataInicio) {
+      throw new AppError("Tournament name and date must be included!");
+    }
+
     const evento = await eventoRepository.createEvent({ torneio, dataInicio });
     res.status(201).json(evento);
   } catch (error) {
