@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const createEventoSchema = z.object({
-  toenio: z.string(),
+  torneio: z.string().min(3, "Tournament name must be at least 3 characters"),
   etapa: z.string().optional(),
   categoria: z.string().optional(),
   dataInicio: z.coerce.date(),
@@ -9,7 +9,9 @@ export const createEventoSchema = z.object({
   local: z.string().optional(),
   cidade: z.string().optional(),
   estado: z.string().optional(),
-  status: z.enum(["AGENDADO", "EM_ANDAMENTO", "FINALIZADO", "CANCELADO"]),
+  status: z
+    .enum(["AGENDADO", "EM_ANDAMENTO", "FINALIZADO", "CANCELADO"])
+    .optional(),
   resultado: z.string().optional(),
   fonteUrl: z.string().optional(),
   observacoes: z.string().optional(),
