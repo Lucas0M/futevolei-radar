@@ -1,11 +1,38 @@
 import prisma from "../prisma";
 import type { Prisma } from "../../generated/prisma/client";
+import type { EnumStatusEventoFilter } from "../../generated/prisma/commonInputTypes";
 
 export const eventoRepository = {
-  findAllEvents: async () => {
-    return prisma.evento.findMany({
-      orderBy: { dataInicio: "asc" },
-    });
+  findAllEvents: async (
+    page: number,
+    limit: number,
+    status?: EnumStatusEventoFilter,
+    cidade?: string,
+  ) => {
+    const skip = (page - 1) * limit;
+
+    const where = {
+      ...(status && { status }),
+      ...(cidade && { cidade }),
+    };
+
+    const [data, total] = await Promise.all([
+      prisma.evento.findMany({
+        skip,
+        take: limit,
+        orderBy: { dataInicio: "asc" },
+        where,
+      }),
+      prisma.evento.count({ where }),
+    ]);
+
+    return {
+      data,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   },
 
   findEventById: async (id: string) => {
