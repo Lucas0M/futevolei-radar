@@ -31,8 +31,8 @@ export function EventoCard({ evento }: EventoCardProps) {
 
   return (
     <div className="relative bg-[#1E3A5F] border border-blue-400/10 rounded-xl p-4 overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:border-yellow-400/35 group">
-      <div className="absolute top-0 right-0 w-0 h-0 border-solid border-t-[32px] border-r-[32px] border-t-transparent border-r-yellow-400/20" />
-      <div className="absolute left-0 top-0 w-[3px] h-full bg-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-l-xl" />
+      <div className="absolute top-0 right-0 w-0 h-0 border-solid border-t-32 border-r-32 border-t-transparent border-r-yellow-400/20" />
+      <div className="absolute left-0 top-0 w-0.75 h-full bg-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-l-xl" />
 
       <h2 className="font-bold text-[17px] text-[#F5F0E8] leading-tight mb-1 tracking-wide">
         {evento.torneio}
@@ -42,7 +42,7 @@ export function EventoCard({ evento }: EventoCardProps) {
         {evento.etapa ?? "—"}
       </p>
 
-      <div className="flex flex-col gap-[6px]">
+      <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-2 text-[12px]">
           <span>📍</span>
           <span className="text-[#B8B0A0]">{localizacao}</span>

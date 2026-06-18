@@ -24,13 +24,19 @@ export function useEventos() {
         const { data } = await api.get("/eventos", {
           params: {
             page,
-            limit: 10,
+            limit: 9,
             ...(filters.status && { status: filters.status }),
             ...(filters.cidade && { cidade: filters.cidade }),
           },
         });
+        console.log(data); // ← loga o data inteiro, não data.meta
         setEventos(data.data);
-        setMeta(data.meta);
+        setMeta({
+          total: data.total,
+          page: data.page,
+          limit: data.limit,
+          totalPages: data.totalPages,
+        });
       } catch (error) {
         setError("Error on loading events. Verify if backend is running!");
       } finally {

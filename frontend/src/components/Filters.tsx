@@ -9,7 +9,7 @@ export function Filters({ filters, updateFilters }: FiltersProps) {
       <select
         value={filters.status}
         onChange={(e) => updateFilters({ status: e.target.value })}
-        className="bg-[#1E3A5F] border border-blue-400/20 text-[#F5F0E8] text-sm px-3 py-2 rounded-lg outline-none focus:border-yellow-400 transition-colors min-w-[160px] cursor-pointer"
+        className="bg-[#1E3A5F] border border-blue-400/20 text-[#F5F0E8] text-sm px-3 py-2 rounded-lg outline-none focus:border-yellow-400 transition-colors min-w-40 cursor-pointer"
       >
         <option value="">Todos os status</option>
         <option value="AGENDADO">Agendado</option>
@@ -23,7 +23,7 @@ export function Filters({ filters, updateFilters }: FiltersProps) {
         placeholder="Filtrar por cidade..."
         value={filters.cidade}
         onChange={(e) => updateFilters({ cidade: e.target.value })}
-        className="bg-[#1E3A5F] border border-blue-400/20 text-[#F5F0E8] text-sm px-3 py-2 rounded-lg outline-none focus:border-yellow-400 transition-colors placeholder:text-[#8A9BB5] flex-1 min-w-[180px]"
+        className="bg-[#1E3A5F] border border-blue-400/20 text-[#F5F0E8] text-sm px-3 py-2 rounded-lg outline-none focus:border-yellow-400 transition-colors placeholder:text-[#8A9BB5] flex-1 min-w-45"
       />
     </div>
   );
