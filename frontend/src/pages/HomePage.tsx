@@ -1,7 +1,7 @@
-import { useEventos } from "../components/useEventos";
-import { EventoList } from "../hooks/EventoList";
-import { Pagination } from "../hooks/Pagination";
-import { Filters } from "./../hooks/Filters";
+import { useEventos } from "../hooks/useEventos";
+import { Filters } from "../components/Filters";
+import { EventoList } from "../components/EventoList";
+import { Pagination } from "../components/Pagination";
 
 export function HomePage() {
   const {
@@ -10,24 +10,79 @@ export function HomePage() {
     page,
     setPage,
     filters,
-    updateFitlers,
+    updateFilters,
     loading,
     error,
   } = useEventos();
 
-  if (loading) return <p>Carregando...</p>;
-  if (error) return <p>{error}</p>;
-
   return (
-    <div>
-      <h1>Futevôlei Radar</h1>
-      <Filters filters={filters} updateFilters={updateFitlers} />
-      <EventoList eventos={eventos} />
-      <Pagination
-        page={page}
-        totalPages={meta?.totalPages ?? 1}
-        setPage={setPage}
-      />
+    <div className="min-h-screen bg-[#0A1628] text-[#F5F0E8]">
+      <div className="max-w-5xl mx-auto px-6 py-8">
+        {/* Header */}
+        <div className="mb-8 pb-6 border-b border-blue-400/15">
+          <div className="flex items-end gap-3 mb-5">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <line
+                x1="4"
+                y1="20"
+                x2="36"
+                y2="20"
+                stroke="#E8C547"
+                strokeWidth="2.5"
+              />
+              <circle cx="14" cy="13" r="5" stroke="#64B5F6" strokeWidth="2" />
+              <line
+                x1="14"
+                y1="18"
+                x2="20"
+                y2="20"
+                stroke="#64B5F6"
+                strokeWidth="1.5"
+              />
+              <line
+                x1="20"
+                y1="20"
+                x2="26"
+                y2="13"
+                stroke="#F5F0E8"
+                strokeWidth="1.5"
+                strokeDasharray="2 2"
+              />
+            </svg>
+            <div>
+              <h1 className="text-3xl font-bold tracking-wide leading-none">
+                Futevôlei <span className="text-yellow-400">Radar</span>
+              </h1>
+              <p className="text-[11px] text-[#8A9BB5] uppercase tracking-[3px] mt-1">
+                Calendário de torneios
+              </p>
+            </div>
+          </div>
+
+          <Filters filters={filters} updateFilters={updateFilters} />
+        </div>
+
+        {loading && (
+          <p className="text-center text-[#8A9BB5] text-xs uppercase tracking-widest py-16">
+            Carregando...
+          </p>
+        )}
+
+        {error && (
+          <p className="text-center text-red-400 text-sm py-16">{error}</p>
+        )}
+
+        {!loading && !error && (
+          <>
+            <EventoList eventos={eventos} />
+            <Pagination
+              page={page}
+              totalPages={meta?.totalPages ?? 1}
+              setPage={setPage}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }

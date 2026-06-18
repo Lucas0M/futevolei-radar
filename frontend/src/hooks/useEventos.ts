@@ -40,7 +40,7 @@ export function useEventos() {
     fetchEventos();
   }, [page, filters]);
 
-  const updateFitlers = (newFilters: Partial<Filters>) => {
+  const updateFilters = (newFilters: Partial<Filters>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
     setPage(1);
   };
@@ -51,7 +51,7 @@ export function useEventos() {
     page,
     setPage,
     filters,
-    updateFitlers,
+    updateFilters,
     loading,
     error,
   };

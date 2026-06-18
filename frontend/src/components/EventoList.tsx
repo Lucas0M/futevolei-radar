@@ -6,8 +6,16 @@ interface EventoListProps {
 }
 
 export function EventoList({ eventos }: EventoListProps) {
+  if (!eventos.length) {
+    return (
+      <p className="text-center text-muted text-sm py-12 tracking-widest uppercase">
+        Nenhum torneio encontrado.
+      </p>
+    );
+  }
+
   return (
-    <div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {eventos.map((evento) => (
         <EventoCard key={evento.id} evento={evento} />
       ))}
