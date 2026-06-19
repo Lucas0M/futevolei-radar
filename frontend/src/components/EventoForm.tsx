@@ -9,12 +9,16 @@ interface EventoFormProps {
   onSucesso?: () => void;
 }
 
+const inputStyle = {
+  background: "var(--bg-raised)",
+  border: "1px solid var(--border)",
+  color: "var(--ink)",
+};
+
 const inputClass =
-  "w-full bg-[#0A1628] border border-blue-400/15 text-[#F5F0E8] text-sm px-3 py-2.5 rounded-lg outline-none focus:border-yellow-400 transition-colors placeholder:text-[#8A9BB5]";
+  "w-full text-[14px] px-3.5 py-2.5 rounded-[10px] outline-none transition-colors";
 const labelClass =
-  "block text-xs text-[#8A9BB5] uppercase tracking-widest mb-1.5";
-const labelRequired =
-  "block text-xs text-[#F5F0E8] uppercase tracking-widest mb-1.5";
+  "block text-[11px] uppercase tracking-wide mb-1.5 font-medium";
 
 export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
   const [form, setForm] = useState({
@@ -77,46 +81,62 @@ export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Obrigatórios */}
-      <div className="bg-[#1E3A5F] border border-blue-400/10 rounded-2xl p-6">
-        <div className="flex items-center gap-2 mb-5">
-          <div className="w-1 h-5 bg-yellow-400 rounded-full" />
-          <h2 className="text-sm font-semibold text-[#F5F0E8] uppercase tracking-widest">
-            Informações obrigatórias
-          </h2>
+      <div
+        className="rounded-[14px] p-5"
+        style={{ background: "var(--bg-sand)" }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <div
+            className="w-1 h-4 rounded-full"
+            style={{ background: "var(--laranja)" }}
+          />
+          <h3
+            className="text-[12px] font-semibold uppercase tracking-wide"
+            style={{ color: "var(--ink)" }}
+          >
+            Obrigatório
+          </h3>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div className="sm:col-span-2">
-            <label className={labelRequired}>Torneio *</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Torneio
+            </label>
             <input
               name="torneio"
               value={form.torneio}
               onChange={handleChange}
               placeholder="Nome do torneio"
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelRequired}>Data de início *</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Data de início
+            </label>
             <input
               name="dataInicio"
               type="date"
               value={form.dataInicio}
               onChange={handleChange}
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelRequired}>Status *</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Status
+            </label>
             <select
               name="status"
               value={form.status}
               onChange={handleChange}
               className={inputClass}
+              style={inputStyle}
             >
               <option value="AGENDADO">Agendado</option>
               <option value="EM_ANDAMENTO">Em andamento</option>
@@ -128,133 +148,170 @@ export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
       </div>
 
       {/* Opcionais */}
-      <div className="bg-[#1E3A5F] border border-blue-400/10 rounded-2xl p-6">
-        <div className="flex items-center gap-2 mb-5">
-          <div className="w-1 h-5 bg-blue-400/50 rounded-full" />
-          <h2 className="text-sm font-semibold text-[#8A9BB5] uppercase tracking-widest">
-            Informações opcionais
-          </h2>
+      <div
+        className="rounded-[14px] p-5"
+        style={{ border: "1px solid var(--border)" }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <div
+            className="w-1 h-4 rounded-full"
+            style={{ background: "var(--ink-faint)" }}
+          />
+          <h3
+            className="text-[12px] font-semibold uppercase tracking-wide"
+            style={{ color: "var(--ink-soft)" }}
+          >
+            Opcional
+          </h3>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div>
-            <label className={labelClass}>Etapa</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Etapa
+            </label>
             <input
               name="etapa"
               value={form.etapa}
               onChange={handleChange}
-              placeholder="Ex: Etapa 1"
+              placeholder="Etapa 1"
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelClass}>Categoria</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Categoria
+            </label>
             <input
               name="categoria"
               value={form.categoria}
               onChange={handleChange}
-              placeholder="Ex: Masculino A"
+              placeholder="Masculino A"
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelClass}>Data de fim</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Data de fim
+            </label>
             <input
               name="dataFim"
               type="date"
               value={form.dataFim}
               onChange={handleChange}
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelClass}>Local</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Local
+            </label>
             <input
               name="local"
               value={form.local}
               onChange={handleChange}
-              placeholder="Ex: Arena Beach"
+              placeholder="Arena Beach"
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelClass}>Cidade</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Cidade
+            </label>
             <input
               name="cidade"
               value={form.cidade}
               onChange={handleChange}
-              placeholder="Ex: Curitiba"
+              placeholder="Curitiba"
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelClass}>Estado</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Estado
+            </label>
             <input
               name="estado"
               value={form.estado}
               onChange={handleChange}
-              placeholder="Ex: PR"
+              placeholder="PR"
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelClass}>Resultado</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Resultado
+            </label>
             <input
               name="resultado"
               value={form.resultado}
               onChange={handleChange}
-              placeholder="Ex: 1º Lucas / 2º João"
+              placeholder="1º Lucas / 2º João"
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div>
-            <label className={labelClass}>URL da fonte</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              URL da fonte
+            </label>
             <input
               name="fonteUrl"
               value={form.fonteUrl}
               onChange={handleChange}
               placeholder="https://..."
               className={inputClass}
+              style={inputStyle}
             />
           </div>
-
           <div className="sm:col-span-2">
-            <label className={labelClass}>Observações</label>
+            <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
+              Observações
+            </label>
             <textarea
               name="observacoes"
               value={form.observacoes}
               onChange={handleChange}
-              placeholder="Informações adicionais..."
+              placeholder="Informações adicionais"
               rows={3}
               className={`${inputClass} resize-none`}
+              style={inputStyle}
             />
           </div>
         </div>
       </div>
 
-      {/* Feedback + botão */}
       {feedback === "sucesso" && (
-        <div className="bg-green-400/10 border border-green-400/25 text-green-400 text-sm px-4 py-3 rounded-lg">
-          ✓ Evento {eventoParaEditar ? "atualizado" : "cadastrado"} com sucesso!
+        <div
+          className="text-[13px] px-4 py-3 rounded-[10px]"
+          style={{ background: "var(--verde-bg)", color: "var(--verde-ink)" }}
+        >
+          Evento {eventoParaEditar ? "atualizado" : "cadastrado"} com sucesso.
         </div>
       )}
       {feedback === "erro" && (
-        <div className="bg-red-400/10 border border-red-400/20 text-red-400 text-sm px-4 py-3 rounded-lg">
-          ⚠ Erro ao cadastrar. Verifique os campos e tente novamente.
+        <div
+          className="text-[13px] px-4 py-3 rounded-[10px]"
+          style={{
+            background: "var(--vermelho-bg)",
+            color: "var(--vermelho-ink)",
+          }}
+        >
+          Erro ao salvar. Verifique os campos e tente novamente.
         </div>
       )}
 
       <button
         onClick={handleSubmit}
         disabled={loading}
-        className="w-full bg-yellow-400 hover:bg-yellow-300 disabled:opacity-50 text-[#0A1628] font-bold text-sm py-3 rounded-lg transition-colors duration-150"
+        className="w-full text-[14px] font-semibold py-3 rounded-[10px] transition-colors disabled:opacity-50"
+        style={{ background: "var(--laranja)", color: "#fff" }}
       >
         {loading
           ? eventoParaEditar

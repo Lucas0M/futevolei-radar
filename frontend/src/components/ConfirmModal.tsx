@@ -10,22 +10,46 @@ export function ConfirmModal({
   onCancel,
 }: ConfirmModalProps) {
   return (
-    <div className="relative bg-[#1E3A5F] border border-blue-400/10 rounded-xl p-4 overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:border-yellow-400/35 group">
-      <h2 className="font-bold text-[17px] text-[#F5F0E8] leading-tight mb-1 tracking-wide">
-        {mensagem}
-      </h2>
-      <button
-        onClick={onConfirm}
-        className="bg-[#1e5f27] border border-green-400/20 text-[#F5F0E8] text-sm px-5 py-2 rounded-lg transition-all duration-150 hover:border-yellow-400 hover:text-yellow-400 disabled:opacity-30 disabled:cursor-not-allowed"
+    <div
+      className="fixed inset-0 flex items-center justify-center p-4 z-50"
+      style={{ background: "rgba(26, 20, 16, 0.45)" }}
+      onClick={onCancel}
+    >
+      <div
+        className="rounded-[14px] p-6 max-w-sm w-full"
+        style={{
+          border: "1px solid var(--border)",
+          background: "var(--bg-raised)",
+        }}
+        onClick={(e) => e.stopPropagation()}
       >
-        Confirmar
-      </button>
-      <button
-        onClick={onCancel}
-        className="bg-[#5f1e1e] border border-red-400/20 text-[#F5F0E8] text-sm px-5 py-2 rounded-lg transition-all duration-150 hover:border-yellow-400 hover:text-yellow-400 disabled:opacity-30 disabled:cursor-not-allowed"
-      >
-        Cancelar
-      </button>
+        <p
+          className="text-[16px] mb-5"
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--ink)",
+            fontWeight: 600,
+          }}
+        >
+          {mensagem}
+        </p>
+        <div className="flex gap-2">
+          <button
+            onClick={onCancel}
+            className="flex-1 text-[13px] font-medium py-2.5 rounded-[8px] transition-colors"
+            style={{ color: "var(--ink-soft)", background: "var(--bg-sand)" }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={onConfirm}
+            className="flex-1 text-[13px] font-medium py-2.5 rounded-[8px] transition-colors"
+            style={{ color: "#fff", background: "var(--vermelho)" }}
+          >
+            Deletar
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

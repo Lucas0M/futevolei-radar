@@ -1,0 +1,43 @@
+/* ============================================
+   FUTEVÔLEI RADAR — Design Tokens
+   Conceito: quadra de areia sob luz noturna
+   ============================================ */
+
+:root {
+  /* Superfícies — areia escurecida, não navy/preto puro */
+  --bg: #1c1812;
+  --bg-raised: #262019;
+  --bg-sand: #2e2820;
+  --border: #3d362a;
+  --border-strong: #544a38;
+
+  /* Tinta */
+  --ink: #f2eada;
+  --ink-soft: #b5a78f;
+  --ink-faint: #7c7160;
+
+  /* Accents com significado próprio */
+  --laranja: #e07840;
+  --laranja-bg: #3d2a1a;
+  --laranja-ink: #f0a876;
+
+  --verde: #4d9580;
+  --verde-bg: #1e3530;
+  --verde-ink: #7fc4ac;
+
+  --azul: #5b8fc2;
+  --azul-bg: #1e2e3d;
+  --azul-ink: #8fb8e0;
+
+  --vermelho: #c25c4a;
+  --vermelho-bg: #3a2420;
+  --vermelho-ink: #e08c78;
+
+  /* Tipografia */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+}

@@ -10,9 +10,21 @@ interface EventoListProps {
 export function EventoList({ eventos, onEditar, onDeletado }: EventoListProps) {
   if (!eventos.length) {
     return (
-      <p className="text-center text-muted text-sm py-12 tracking-widest uppercase">
-        Nenhum torneio encontrado.
-      </p>
+      <div className="text-center py-20">
+        <p
+          className="text-[18px] mb-1"
+          style={{
+            fontFamily: "var(--font-display)",
+            color: "var(--ink)",
+            fontWeight: 600,
+          }}
+        >
+          Nenhum torneio por aqui
+        </p>
+        <p className="text-[13px]" style={{ color: "var(--ink-faint)" }}>
+          Ajuste os filtros ou cadastre um novo evento.
+        </p>
+      </div>
     );
   }
 

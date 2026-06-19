@@ -1,36 +1,41 @@
 import { useAdminAuth } from "../hooks/useAdminAuth";
 import { LoginForm } from "../components/LoginForm";
 import { EventoForm } from "../components/EventoForm";
-import { useState } from "react";
-import type { Evento } from "../types/evento";
 
 export function AdminPage() {
   const { autenticado, erro, login, logout } = useAdminAuth();
-  const [eventoEditando, setEventoEditando] = useState<Evento | null>(null);
 
   if (!autenticado) return <LoginForm onLogin={login} erro={erro} />;
 
   return (
-    <div className="min-h-screen bg-[#0A1628]">
-      {/* Topbar */}
-      <div className="border-b border-blue-400/10 px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen" style={{ background: "var(--bg)" }}>
+      <div
+        className="px-6 py-4 flex items-center justify-between"
+        style={{ borderBottom: "1px solid var(--border)" }}
+      >
         <div className="flex items-center gap-3">
-          <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
             <line
               x1="4"
               y1="20"
               x2="36"
               y2="20"
-              stroke="#E8C547"
+              stroke="var(--laranja)"
               strokeWidth="2.5"
             />
-            <circle cx="14" cy="13" r="5" stroke="#64B5F6" strokeWidth="2" />
+            <circle
+              cx="14"
+              cy="13"
+              r="5"
+              stroke="var(--verde)"
+              strokeWidth="2"
+            />
             <line
               x1="14"
               y1="18"
               x2="20"
               y2="20"
-              stroke="#64B5F6"
+              stroke="var(--verde)"
               strokeWidth="1.5"
             />
             <line
@@ -38,46 +43,56 @@ export function AdminPage() {
               y1="20"
               x2="26"
               y2="13"
-              stroke="#F5F0E8"
+              stroke="var(--ink)"
               strokeWidth="1.5"
               strokeDasharray="2 2"
             />
           </svg>
-          <div>
-            <span className="text-[#F5F0E8] font-bold tracking-wide">
-              Futevôlei <span className="text-yellow-400">Radar</span>
-            </span>
-            <span className="text-[#8A9BB5] text-xs ml-2 uppercase tracking-widest">
-              Admin
-            </span>
-          </div>
+          <span
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--ink)",
+              fontWeight: 600,
+            }}
+            className="text-[16px]"
+          >
+            Futevôlei <span style={{ color: "var(--laranja)" }}>Radar</span>
+          </span>
+          <span
+            className="text-[11px] uppercase tracking-wide"
+            style={{ color: "var(--ink-faint)" }}
+          >
+            Admin
+          </span>
         </div>
 
         <button
           onClick={logout}
-          className="text-xs text-[#8A9BB5] hover:text-red-400 border border-blue-400/15 hover:border-red-400/30 px-4 py-2 rounded-lg transition-colors"
+          className="text-[12px] font-medium px-4 py-2 rounded-[8px] transition-colors"
+          style={{ color: "var(--ink-soft)", background: "var(--bg-sand)" }}
         >
           Sair
         </button>
       </div>
 
-      {/* Conteúdo */}
-      <div className="max-w-2xl mx-auto px-6 py-8">
+      <div className="max-w-2xl mx-auto px-6 py-10">
         <div className="mb-6">
-          <h1 className="text-xl font-bold text-[#F5F0E8]">Cadastrar evento</h1>
-          <p className="text-[#8A9BB5] text-sm mt-1">
+          <h1
+            className="text-[22px]"
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--ink)",
+              fontWeight: 600,
+            }}
+          >
+            Cadastrar evento
+          </h1>
+          <p className="text-[13px] mt-1" style={{ color: "var(--ink-faint)" }}>
             Preencha os campos abaixo para adicionar um novo torneio.
           </p>
         </div>
 
-        {eventoEditando ? (
-          <EventoForm
-            eventoParaEditar={eventoEditando}
-            onSucesso={() => setEventoEditando(null)}
-          />
-        ) : (
-          <EventoForm />
-        )}
+        <EventoForm />
       </div>
     </div>
   );
