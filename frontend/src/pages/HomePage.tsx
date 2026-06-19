@@ -2,6 +2,9 @@ import { useEventos } from "../hooks/useEventos";
 import { Filters } from "../components/Filters";
 import { EventoList } from "../components/EventoList";
 import { Pagination } from "../components/Pagination";
+import type { Evento } from "../types/evento";
+import { useState } from "react";
+import { EventoForm } from "../components/EventoForm";
 
 export function HomePage() {
   const {
@@ -13,7 +16,9 @@ export function HomePage() {
     updateFilters,
     loading,
     error,
+    refetch,
   } = useEventos();
+  const [eventoEditando, setEventoEditando] = useState<Evento | null>(null);
 
   return (
     <div className="min-h-screen bg-[#0A1628] text-[#F5F0E8]">
@@ -74,7 +79,11 @@ export function HomePage() {
 
         {!loading && !error && (
           <>
-            <EventoList eventos={eventos} />
+            <EventoList
+              eventos={eventos}
+              onEditar={setEventoEditando}
+              onDeletado={refetch}
+            />
             <Pagination
               page={page}
               totalPages={meta?.totalPages ?? 1}
@@ -83,6 +92,30 @@ export function HomePage() {
           </>
         )}
       </div>
+      {eventoEditando && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+          <div className="bg-[#0A1628] border border-blue-400/20 rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-[#F5F0E8]">
+                Editar evento
+              </h2>
+              <button
+                onClick={() => setEventoEditando(null)}
+                className="text-[#8A9BB5] hover:text-[#F5F0E8]"
+              >
+                ✕
+              </button>
+            </div>
+            <EventoForm
+              eventoParaEditar={eventoEditando}
+              onSucesso={() => {
+                setEventoEditando(null);
+                refetch();
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

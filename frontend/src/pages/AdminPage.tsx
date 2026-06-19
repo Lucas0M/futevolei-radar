@@ -1,9 +1,12 @@
 import { useAdminAuth } from "../hooks/useAdminAuth";
 import { LoginForm } from "../components/LoginForm";
 import { EventoForm } from "../components/EventoForm";
+import { useState } from "react";
+import type { Evento } from "../types/evento";
 
 export function AdminPage() {
   const { autenticado, erro, login, logout } = useAdminAuth();
+  const [eventoEditando, setEventoEditando] = useState<Evento | null>(null);
 
   if (!autenticado) return <LoginForm onLogin={login} erro={erro} />;
 
@@ -67,7 +70,14 @@ export function AdminPage() {
           </p>
         </div>
 
-        <EventoForm />
+        {eventoEditando ? (
+          <EventoForm
+            eventoParaEditar={eventoEditando}
+            onSucesso={() => setEventoEditando(null)}
+          />
+        ) : (
+          <EventoForm />
+        )}
       </div>
     </div>
   );
