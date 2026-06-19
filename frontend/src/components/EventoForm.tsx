@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { api } from "../services/api";
+import type { Evento } from "../types/evento";
 
 type Feedback = "sucesso" | "erro" | null;
+
+interface EventoFormProps {
+  eventoParaEditar?: Evento;
+  onSucesso?: () => void;
+}
 
 const inputClass =
   "w-full bg-[#0A1628] border border-blue-400/15 text-[#F5F0E8] text-sm px-3 py-2.5 rounded-lg outline-none focus:border-yellow-400 transition-colors placeholder:text-[#8A9BB5]";
@@ -10,20 +16,20 @@ const labelClass =
 const labelRequired =
   "block text-xs text-[#F5F0E8] uppercase tracking-widest mb-1.5";
 
-export function EventoForm() {
+export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
   const [form, setForm] = useState({
-    torneio: "",
-    etapa: "",
-    categoria: "",
-    dataInicio: "",
-    dataFim: "",
-    local: "",
-    cidade: "",
-    estado: "",
-    status: "AGENDADO",
-    resultado: "",
-    fonteUrl: "",
-    observacoes: "",
+    torneio: eventoParaEditar?.torneio ?? "",
+    etapa: eventoParaEditar?.etapa ?? "",
+    categoria: eventoParaEditar?.categoria ?? "",
+    dataInicio: eventoParaEditar?.dataInicio?.slice(0, 10) ?? "",
+    dataFim: eventoParaEditar?.dataFim?.slice(0, 10) ?? "",
+    local: eventoParaEditar?.local ?? "",
+    cidade: eventoParaEditar?.cidade ?? "",
+    estado: eventoParaEditar?.estado ?? "",
+    status: eventoParaEditar?.status ?? "AGENDADO",
+    resultado: eventoParaEditar?.resultado ?? "",
+    fonteUrl: eventoParaEditar?.fonteUrl ?? "",
+    observacoes: eventoParaEditar?.observacoes ?? "",
   });
 
   const [feedback, setFeedback] = useState<Feedback>(null);
@@ -41,22 +47,28 @@ export function EventoForm() {
     setLoading(true);
     setFeedback(null);
     try {
-      await api.post("/eventos", form);
-      setFeedback("sucesso");
-      setForm({
-        torneio: "",
-        etapa: "",
-        categoria: "",
-        dataInicio: "",
-        dataFim: "",
-        local: "",
-        cidade: "",
-        estado: "",
-        status: "AGENDADO",
-        resultado: "",
-        fonteUrl: "",
-        observacoes: "",
-      });
+      if (eventoParaEditar) {
+        await api.patch(`/eventos/${eventoParaEditar.id}`, form);
+        setFeedback("sucesso");
+        onSucesso?.();
+      } else {
+        await api.post("/eventos", form);
+        setFeedback("sucesso");
+        setForm({
+          torneio: "",
+          etapa: "",
+          categoria: "",
+          dataInicio: "",
+          dataFim: "",
+          local: "",
+          cidade: "",
+          estado: "",
+          status: "AGENDADO",
+          resultado: "",
+          fonteUrl: "",
+          observacoes: "",
+        });
+      }
     } catch {
       setFeedback("erro");
     } finally {
@@ -230,7 +242,7 @@ export function EventoForm() {
       {/* Feedback + botão */}
       {feedback === "sucesso" && (
         <div className="bg-green-400/10 border border-green-400/25 text-green-400 text-sm px-4 py-3 rounded-lg">
-          ✓ Evento cadastrado com sucesso!
+          ✓ Evento {eventoParaEditar ? "atualizado" : "cadastrado"} com sucesso!
         </div>
       )}
       {feedback === "erro" && (
@@ -244,7 +256,13 @@ export function EventoForm() {
         disabled={loading}
         className="w-full bg-yellow-400 hover:bg-yellow-300 disabled:opacity-50 text-[#0A1628] font-bold text-sm py-3 rounded-lg transition-colors duration-150"
       >
-        {loading ? "Cadastrando..." : "Cadastrar Evento"}
+        {loading
+          ? eventoParaEditar
+            ? "Salvando..."
+            : "Cadastrando..."
+          : eventoParaEditar
+            ? "Salvar alterações"
+            : "Cadastrar evento"}
       </button>
     </div>
   );

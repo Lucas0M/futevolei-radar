@@ -15,6 +15,7 @@ export function useEventos() {
   const [filters, setFilters] = useState<Filters>({ status: "", cidade: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
 
   useEffect(() => {
     const fetchEventos = async () => {
@@ -44,7 +45,9 @@ export function useEventos() {
       }
     };
     fetchEventos();
-  }, [page, filters]);
+  }, [page, filters, refetchTrigger]);
+
+  const refetch = () => setRefetchTrigger((prev) => prev + 1);
 
   const updateFilters = (newFilters: Partial<Filters>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
@@ -60,5 +63,6 @@ export function useEventos() {
     updateFilters,
     loading,
     error,
+    refetch,
   };
 }

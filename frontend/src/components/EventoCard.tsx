@@ -1,4 +1,7 @@
+import { useState } from "react";
 import type { Evento } from "../types/evento";
+import { ConfirmModal } from "./ConfirmModal";
+import { api } from "../services/api";
 
 const statusConfig = {
   AGENDADO: {
@@ -21,13 +24,27 @@ const statusConfig = {
 
 interface EventoCardProps {
   evento: Evento;
+  onEditar: (evento: Evento) => void;
+  onDeletado: () => void;
 }
 
-export function EventoCard({ evento }: EventoCardProps) {
+export function EventoCard({ evento, onEditar, onDeletado }: EventoCardProps) {
+  const [showConfirm, setShowConfirm] = useState(false);
   const badge = statusConfig[evento.status];
   const localizacao =
     [evento.cidade, evento.estado].filter(Boolean).join(", ") || "—";
   const dataFormatada = new Date(evento.dataInicio).toLocaleDateString("pt-BR");
+  const isAdmin = sessionStorage.getItem("admin") === "ok";
+
+  const handleDeletar = async (id: string) => {
+    try {
+      await api.delete(`/eventos/${id}`);
+      setShowConfirm(false);
+      onDeletado();
+    } catch (error) {
+      alert("Erro ao deletar o evento. Tente novamente.");
+    }
+  };
 
   return (
     <div className="relative bg-[#1E3A5F] border border-blue-400/10 rounded-xl p-4 overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:border-yellow-400/35 group">
@@ -58,6 +75,31 @@ export function EventoCard({ evento }: EventoCardProps) {
       >
         {badge.label}
       </span>
+
+      {isAdmin && (
+        <div className="flex gap-2 mt-3">
+          <button
+            onClick={() => onEditar(evento)}
+            className="flex-1 text-xs bg-blue-400/10 hover:bg-blue-400/20 text-blue-300 border border-blue-400/25 py-1.5 rounded-lg transition-colors"
+          >
+            Editar
+          </button>
+          <button
+            onClick={() => setShowConfirm(true)}
+            className="flex-1 text-xs bg-red-400/10 hover:bg-red-400/20 text-red-400 border border-red-400/20 py-1.5 rounded-lg transition-colors"
+          >
+            Deletar
+          </button>
+        </div>
+      )}
+
+      {showConfirm && (
+        <ConfirmModal
+          mensagem={`Deletar "${evento.torneio}"?`}
+          onConfirm={() => handleDeletar(evento.id)}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
     </div>
   );
 }
