@@ -1,43 +1,67 @@
 /* ============================================
    FUTEVÔLEI RADAR — Design Tokens
-   Conceito: quadra de areia sob luz noturna
+   Dashboard moderno: profundidade, glow, vida
    ============================================ */
 
 :root {
-  /* Superfícies — areia escurecida, não navy/preto puro */
-  --bg: #1c1812;
-  --bg-raised: #262019;
-  --bg-sand: #2e2820;
-  --border: #3d362a;
-  --border-strong: #544a38;
+  --bg: #0a0a0f;
+  --bg-raised: #131319;
+  --bg-sand: #1a1a22;
+  --border: #26262f;
+  --border-strong: #34343f;
 
-  /* Tinta */
-  --ink: #f2eada;
-  --ink-soft: #b5a78f;
-  --ink-faint: #7c7160;
+  --ink: #f5f5f7;
+  --ink-soft: #9a9aa8;
+  --ink-faint: #5c5c68;
 
-  /* Accents com significado próprio */
-  --laranja: #e07840;
-  --laranja-bg: #3d2a1a;
-  --laranja-ink: #f0a876;
+  /* Accent vibrante com glow */
+  --accent: #ff6b2c;
+  --accent-2: #ff8f50;
+  --accent-glow: rgba(255, 107, 44, 0.35);
+  --accent-bg: rgba(255, 107, 44, 0.12);
 
-  --verde: #4d9580;
-  --verde-bg: #1e3530;
-  --verde-ink: #7fc4ac;
+  /* Status com gradiente + glow próprios */
+  --st-agendado: #ff6b2c;
+  --st-agendado-bg: rgba(255, 107, 44, 0.14);
+  --st-agendado-glow: rgba(255, 107, 44, 0.25);
 
-  --azul: #5b8fc2;
-  --azul-bg: #1e2e3d;
-  --azul-ink: #8fb8e0;
+  --st-andamento: #2de08e;
+  --st-andamento-bg: rgba(45, 224, 142, 0.14);
+  --st-andamento-glow: rgba(45, 224, 142, 0.3);
 
-  --vermelho: #c25c4a;
-  --vermelho-bg: #3a2420;
-  --vermelho-ink: #e08c78;
+  --st-finalizado: #4f9cff;
+  --st-finalizado-bg: rgba(79, 156, 255, 0.14);
+  --st-finalizado-glow: rgba(79, 156, 255, 0.25);
 
-  /* Tipografia */
-  --font-display: "Fraunces", Georgia, serif;
+  --st-cancelado: #ff4d6a;
+  --st-cancelado-bg: rgba(255, 77, 106, 0.14);
+  --st-cancelado-glow: rgba(255, 77, 106, 0.2);
+
+  --font-display: "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
   --radius: 14px;
   --radius-sm: 8px;
+}
+
+body {
+  background:
+    radial-gradient(
+      ellipse 1000px 600px at 10% -10%,
+      rgba(255, 107, 44, 0.14),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 800px 600px at 100% 10%,
+      rgba(79, 156, 255, 0.09),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 700px 500px at 50% 110%,
+      rgba(45, 224, 142, 0.06),
+      transparent
+    ),
+    var(--bg);
+  min-height: 100vh;
 }

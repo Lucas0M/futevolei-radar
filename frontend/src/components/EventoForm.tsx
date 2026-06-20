@@ -10,15 +10,14 @@ interface EventoFormProps {
 }
 
 const inputStyle = {
-  background: "var(--bg-raised)",
+  background: "var(--bg-sand)",
   border: "1px solid var(--border)",
   color: "var(--ink)",
 };
-
 const inputClass =
-  "w-full text-[14px] px-3.5 py-2.5 rounded-[10px] outline-none transition-colors";
+  "w-full text-[13px] px-3.5 py-2.5 rounded-[10px] outline-none transition-all focus:border-[var(--accent)]";
 const labelClass =
-  "block text-[11px] uppercase tracking-wide mb-1.5 font-medium";
+  "block text-[11px] mb-1.5 font-semibold uppercase tracking-wide";
 
 export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
   const [form, setForm] = useState({
@@ -82,24 +81,19 @@ export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
 
   return (
     <div className="space-y-6">
-      {/* Obrigatórios */}
       <div
         className="rounded-[14px] p-5"
-        style={{ background: "var(--bg-sand)" }}
+        style={{
+          background: "var(--accent-bg)",
+          border: "1px solid rgba(255,107,44,0.25)",
+        }}
       >
-        <div className="flex items-center gap-2 mb-4">
-          <div
-            className="w-1 h-4 rounded-full"
-            style={{ background: "var(--laranja)" }}
-          />
-          <h3
-            className="text-[12px] font-semibold uppercase tracking-wide"
-            style={{ color: "var(--ink)" }}
-          >
-            Obrigatório
-          </h3>
-        </div>
-
+        <h3
+          className="text-[11px] font-bold uppercase tracking-wide mb-4"
+          style={{ color: "var(--accent-2)" }}
+        >
+          Obrigatório
+        </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div className="sm:col-span-2">
             <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
@@ -147,24 +141,16 @@ export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
         </div>
       </div>
 
-      {/* Opcionais */}
       <div
         className="rounded-[14px] p-5"
         style={{ border: "1px solid var(--border)" }}
       >
-        <div className="flex items-center gap-2 mb-4">
-          <div
-            className="w-1 h-4 rounded-full"
-            style={{ background: "var(--ink-faint)" }}
-          />
-          <h3
-            className="text-[12px] font-semibold uppercase tracking-wide"
-            style={{ color: "var(--ink-soft)" }}
-          >
-            Opcional
-          </h3>
-        </div>
-
+        <h3
+          className="text-[11px] font-bold uppercase tracking-wide mb-4"
+          style={{ color: "var(--ink-faint)" }}
+        >
+          Opcional
+        </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div>
             <label className={labelClass} style={{ color: "var(--ink-soft)" }}>
@@ -289,18 +275,21 @@ export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
 
       {feedback === "sucesso" && (
         <div
-          className="text-[13px] px-4 py-3 rounded-[10px]"
-          style={{ background: "var(--verde-bg)", color: "var(--verde-ink)" }}
+          className="text-[13px] font-medium px-4 py-3 rounded-[10px]"
+          style={{
+            background: "var(--st-andamento-bg)",
+            color: "var(--st-andamento)",
+          }}
         >
           Evento {eventoParaEditar ? "atualizado" : "cadastrado"} com sucesso.
         </div>
       )}
       {feedback === "erro" && (
         <div
-          className="text-[13px] px-4 py-3 rounded-[10px]"
+          className="text-[13px] font-medium px-4 py-3 rounded-[10px]"
           style={{
-            background: "var(--vermelho-bg)",
-            color: "var(--vermelho-ink)",
+            background: "var(--st-cancelado-bg)",
+            color: "var(--st-cancelado)",
           }}
         >
           Erro ao salvar. Verifique os campos e tente novamente.
@@ -310,8 +299,12 @@ export function EventoForm({ eventoParaEditar, onSucesso }: EventoFormProps) {
       <button
         onClick={handleSubmit}
         disabled={loading}
-        className="w-full text-[14px] font-semibold py-3 rounded-[10px] transition-colors disabled:opacity-50"
-        style={{ background: "var(--laranja)", color: "#fff" }}
+        className="w-full text-[14px] font-bold py-3 rounded-[10px] transition-all disabled:opacity-50 hover:brightness-110"
+        style={{
+          background: "linear-gradient(135deg, var(--accent), var(--accent-2))",
+          color: "#fff",
+          boxShadow: "0 4px 20px -4px var(--accent-glow)",
+        }}
       >
         {loading
           ? eventoParaEditar

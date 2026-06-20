@@ -12,12 +12,8 @@ export function EventoList({ eventos, onEditar, onDeletado }: EventoListProps) {
     return (
       <div className="text-center py-20">
         <p
-          className="text-[18px] mb-1"
-          style={{
-            fontFamily: "var(--font-display)",
-            color: "var(--ink)",
-            fontWeight: 600,
-          }}
+          className="text-[17px] font-bold mb-1"
+          style={{ color: "var(--ink)" }}
         >
           Nenhum torneio por aqui
         </p>

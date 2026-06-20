@@ -9,7 +9,7 @@ export function Filters({ filters, updateFilters }: FiltersProps) {
       <select
         value={filters.status}
         onChange={(e) => updateFilters({ status: e.target.value })}
-        className="text-[13px] px-3.5 py-2.5 rounded-[10px] outline-none transition-colors min-w-[150px] cursor-pointer"
+        className="text-[13px] font-medium px-3.5 py-2.5 rounded-[10px] outline-none transition-all min-w-[160px] cursor-pointer focus:border-[var(--accent)]"
         style={{
           background: "var(--bg-raised)",
           border: "1px solid var(--border)",
@@ -28,7 +28,7 @@ export function Filters({ filters, updateFilters }: FiltersProps) {
         placeholder="Filtrar por cidade"
         value={filters.cidade}
         onChange={(e) => updateFilters({ cidade: e.target.value })}
-        className="text-[13px] px-3.5 py-2.5 rounded-[10px] outline-none transition-colors flex-1 min-w-[180px]"
+        className="text-[13px] px-3.5 py-2.5 rounded-[10px] outline-none transition-all flex-1 min-w-[180px] focus:border-[var(--accent)]"
         style={{
           background: "var(--bg-raised)",
           border: "1px solid var(--border)",
