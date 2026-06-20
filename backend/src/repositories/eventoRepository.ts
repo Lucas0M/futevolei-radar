@@ -1,5 +1,5 @@
 import prisma from "../prisma";
-import type { Prisma } from "../../generated/prisma/client";
+import { Prisma } from "../../generated/prisma/client";
 import type { EnumStatusEventoFilter } from "../../generated/prisma/commonInputTypes";
 
 export const eventoRepository = {
@@ -13,7 +13,12 @@ export const eventoRepository = {
 
     const where = {
       ...(status && { status }),
-      ...(cidade && { cidade }),
+      ...(cidade && {
+        cidade: {
+          contains: cidade,
+          mode: Prisma.QueryMode.insensitive,
+        },
+      }),
     };
 
     const [data, total] = await Promise.all([
