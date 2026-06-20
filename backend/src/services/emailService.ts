@@ -11,7 +11,7 @@ export const sendEmail = async (evento: Evento) => {
     html: `
       <h2>${evento.torneio}</h2>
       <p>Acontece neste fim de semana${evento.cidade ? ` em ${evento.cidade}` : ""}.</p>
-      <p>Data: ${evento.dataInicio.toLocaleDateString("pt-BR")}</p>
+      <p>Data: ${evento.dataInicio.toLocaleDateString("pt-BR", { timeZone: "UTC" })}</p>
     `,
   });
 };
