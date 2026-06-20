@@ -14,9 +14,15 @@ interface EventoCardProps {
   evento: Evento;
   onEditar: (evento: Evento) => void;
   onDeletado: () => void;
+  onVerDetalhes: (evento: Evento) => void;
 }
 
-export function EventoCard({ evento, onEditar, onDeletado }: EventoCardProps) {
+export function EventoCard({
+  evento,
+  onEditar,
+  onDeletado,
+  onVerDetalhes,
+}: EventoCardProps) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [hover, setHover] = useState(false);
   const status = statusConfig[evento.status];
@@ -26,6 +32,7 @@ export function EventoCard({ evento, onEditar, onDeletado }: EventoCardProps) {
     {
       day: "2-digit",
       month: "short",
+      timeZone: "UTC",
     },
   );
   const isAdmin = sessionStorage.getItem("admin") === "ok";
@@ -112,9 +119,21 @@ export function EventoCard({ evento, onEditar, onDeletado }: EventoCardProps) {
         )}
       </div>
 
+      <button
+        onClick={() => onVerDetalhes(evento)}
+        className="w-full text-[12px] font-semibold py-2 mt-4 rounded-[8px] transition-all hover:brightness-125"
+        style={{
+          color: "var(--ink-soft)",
+          background: "var(--bg-sand)",
+          border: "1px solid var(--border)",
+        }}
+      >
+        Ver detalhes
+      </button>
+
       {isAdmin && (
         <div
-          className="flex gap-2 mt-4 pt-3"
+          className="flex gap-2 mt-2 pt-3"
           style={{ borderTop: "1px solid var(--border)" }}
         >
           <button

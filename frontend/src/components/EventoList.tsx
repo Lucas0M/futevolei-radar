@@ -5,9 +5,15 @@ interface EventoListProps {
   eventos: Evento[];
   onEditar: (evento: Evento) => void;
   onDeletado: () => void;
+  onVerDetalhes: (evento: Evento) => void;
 }
 
-export function EventoList({ eventos, onEditar, onDeletado }: EventoListProps) {
+export function EventoList({
+  eventos,
+  onEditar,
+  onDeletado,
+  onVerDetalhes,
+}: EventoListProps) {
   if (!eventos.length) {
     return (
       <div className="text-center py-20">
@@ -32,6 +38,7 @@ export function EventoList({ eventos, onEditar, onDeletado }: EventoListProps) {
           evento={evento}
           onEditar={onEditar}
           onDeletado={onDeletado}
+          onVerDetalhes={onVerDetalhes}
         />
       ))}
     </div>

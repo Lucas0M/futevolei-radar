@@ -4,6 +4,7 @@ import { Filters } from "../components/Filters";
 import { EventoList } from "../components/EventoList";
 import { Pagination } from "../components/Pagination";
 import { EventoForm } from "../components/EventoForm";
+import { EventoDetalhes } from "../components/EventoDetalhes";
 import type { Evento } from "../types/evento";
 
 export function HomePage() {
@@ -19,6 +20,9 @@ export function HomePage() {
     refetch,
   } = useEventos();
   const [eventoEditando, setEventoEditando] = useState<Evento | null>(null);
+  const [eventoVisualizando, setEventoVisualizando] = useState<Evento | null>(
+    null,
+  );
 
   return (
     <div className="min-h-screen">
@@ -88,6 +92,7 @@ export function HomePage() {
               eventos={eventos}
               onEditar={setEventoEditando}
               onDeletado={refetch}
+              onVerDetalhes={setEventoVisualizando}
             />
             <Pagination
               page={page}
@@ -139,6 +144,13 @@ export function HomePage() {
             />
           </div>
         </div>
+      )}
+
+      {eventoVisualizando && (
+        <EventoDetalhes
+          evento={eventoVisualizando}
+          onClose={() => setEventoVisualizando(null)}
+        />
       )}
     </div>
   );
